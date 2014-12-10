@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  root to: 'movies/index'
+  root to: 'movies#index'
 end
