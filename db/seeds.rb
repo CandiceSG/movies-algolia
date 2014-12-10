@@ -266,7 +266,7 @@ Movie.destroy_all
 movie_names.each_with_index do |movie_name, index|
   i = Imdb::Search.new(movie_name)
   imdb_movie = i.movies.first
-  movie = Movie.create!({
+  movie = Movie.create({
     imdb_id: imdb_movie.id,
     title: imdb_movie.title.gsub(/\(\d+\)/, ''),
     url: imdb_movie.url,
