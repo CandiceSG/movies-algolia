@@ -38,6 +38,8 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'figaro'
+
 gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 
