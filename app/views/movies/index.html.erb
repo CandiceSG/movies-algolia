@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm-offset-3 col-sm-6">
+    <div class="col-xs-12">
 
       <div class="input-group">
         <input class="form-control" type="text" id="query"
@@ -14,3 +14,38 @@
     </div>
   </div>
 </div>
+
+<!-- Typahead.js is used to display the auto-completion menu -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+<!-- Algolia -->
+<script src="//cdn.jsdelivr.net/algoliasearch/latest/algoliasearch.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Replace the following values by your ApplicationID and ApiKey.
+    var algolia = new AlgoliaSearch(
+      '<%= ENV['ALGOLIA_APPLICATION_ID'] %>',
+      '<%= ENV['ALGOLIA_SEARCH_ONLY_API_KEY'] %>'
+    );
+
+    // replace YourIndexName by the name of the index you want to query.
+    var index = algolia.initIndex('Movie<%= ENV['ALGOLIA_SUFFIX'] %>');
+
+    // typeahead.js initialization
+    $('#query').typeahead({ hint: false }, {
+      source: index.ttAdapter({ hitsPerPage: 5 }),
+      displayKey: 'email',
+      templates: {
+        suggestion: function(hit) {
+          // render the hit
+          return '<div class="hit">' +
+            '<div class="name">' +
+              hit._highlightResult.title.value + ' ' +
+              '(' + hit._highlightResult.director.value + ')' +
+            '</div>' +
+          '</div>';
+        }
+      }
+    });
+  });
+</script>
